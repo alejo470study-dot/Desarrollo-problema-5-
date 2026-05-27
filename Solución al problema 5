@@ -1,0 +1,74 @@
+# =====================================================================
+# Curso: Fundamentos de Programación (Código: 213022)
+# Fase 5 - Evaluación Final POA
+# Problema Seleccionado: Problema 5 (Horas Trabajadas y Jornada)
+# Paradigma: Programación Estructurada
+# =====================================================================
+
+def obtener_datos_equipo():
+    """
+    R1: Módulo para inicializar la matriz de datos con al menos 4 recursos.
+    Estructura de cada fila: [Nombre, Lunes, Martes, Miércoles, Jueves, Viernes]
+    Nota: La guía indica que el registro es de Lunes a Viernes.
+    """
+    matriz_recursos = [
+        ["Carlos Mendoza", 8, 9, 8, 8, 10],   # Total: 43 (Sobretiempo)
+        ["Ana María Silva", 8, 8, 7, 8, 8],   # Total: 39 (Estándar)
+        ["David Granados", 9, 10, 9, 9, 8],  # Total: 45 (Sobretiempo)
+        ["Laura Bermúdez", 8, 8, 8, 8, 6]    # Total: 38 (Estándar)
+    ]
+    return matriz_recursos
+
+
+def calcular_jornada_recurso(fila_recurso, umbral_horas=40):
+    """
+    R2 y R3: Módulo (función) para calcular la suma de horas semanales
+    y clasificar la jornada de un recurso individual.
+    """
+    nombre = fila_recurso[0]
+    # Extraer únicamente los valores numéricos correspondientes a los días (posiciones 1 a 5)
+    horas_dias = fila_recurso[1:] 
+    
+    # R2: Calcular la suma total de horas semanales utilizando una estructura iterativa
+    total_horas = 0
+    for horas in horas_dias:
+        total_horas += horas
+        
+    # R3: Lógica de negocio para clasificar la jornada según el umbral estándar
+    if total_horas > umbral_horas:
+        clasificacion = "Sobretiempo"
+    else:
+        clasificacion = "Horario Estándar"
+        
+    return nombre, total_horas, clasificacion
+
+
+def generar_informe_semanal():
+    """
+    R4: Módulo principal que coordina el flujo del programa, itera
+    sobre la matriz y muestra el informe final tabulado requerido.
+    """
+    # Obtención de la matriz base
+    equipo_datos = obtener_datos_equipo()
+    
+    # Encabezado del reporte por pantalla
+    print("=" * 65)
+    print("      INFORME DE CONTROL DE COMPROMISO Y JORNADA SEMANAL")
+    print("=" * 65)
+    print(f"{'NOMBRE DEL RECURSO':<20} | {'TOTAL HORAS':<12} | {'CLASIFICACIÓN JORNADA':<20}")
+    print("-" * 65)
+    
+    # Estructura repetitiva para recorrer las filas de la matriz
+    for i in range(len(equipo_datos)):
+        # Procesar los datos de cada recurso mediante la función auxiliar
+        nombre, horas_totales, tipo_jornada = calcular_jornada_recurso(equipo_datos[i])
+        
+        # Salida formateada de datos
+        print(f"{nombre:<20} | {horas_totales:<12} | {tipo_jornada:<20}")
+        
+    print("=" * 65)
+
+
+# Bloque de ejecución principal (Entry point)
+if __name__ == "__main__":
+    generar_informe_semanal()
